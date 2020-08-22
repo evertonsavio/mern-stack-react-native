@@ -3,6 +3,7 @@
 ```
 npm install -g expo-cli
 expo --version
+expo init awesomeApp
 ```
 
   
