@@ -93,5 +93,17 @@ router.put('/:id', [validate], (req, res) => {
     .catch((err) => console.log(err));
 });
 
+///////////////////////////PUT/api/imoveis////////////////////
+///////////////////////////////////////////////////////////////
+router.delete('/:id', (req, res) => {
+  const imovelId = req.params.id;
+
+  Imovel.findByIdAndRemove(imovelId)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => console.log(err));
+});
+
 //////////////////////////////////////////////////////////////
 module.exports = router;
