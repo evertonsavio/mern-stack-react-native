@@ -48,3 +48,5 @@ const port = process.env.PORT || 3000;
 * https://mongoosejs.com/  
 * npm install moongoose  
   
+### Express Validator  
+* npm install --save express-validator
