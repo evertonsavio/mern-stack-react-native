@@ -26,8 +26,8 @@ npm run start
 ````
 npm install dotenv```
 
-* criar arquivo .env -> PORT=3000
-````
+* criar arquivo .env -> PORT=3000  
+
 ```
 require('dotenv').config();
 const port = process.env.PORT || 3000;
