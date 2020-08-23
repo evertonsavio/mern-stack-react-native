@@ -40,8 +40,11 @@ const port = process.env.PORT || 3000;
 * Em Database Acess -> Add New Database User  
 * Network Acess -> Add IP Adresss -> Add Current IP Adress  
 * mongodb+srv://everluca:<password>@cluster0.ybkh2.azure.mongodb.net/<dbname>?retryWrites=true&w=majority  
-  
+* Em Clusters -> CONNECT -> Connect your application  
+* Em CLusters -> CONNECT -> Connect using MongoDB Compass -> Download Compass
+
 ### Mongoose  
   
 * https://mongoosejs.com/  
 * npm install moongoose  
+  
