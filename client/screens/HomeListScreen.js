@@ -1,15 +1,20 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {FloatingAction} from 'react-native-floating-action';
 import Card from '../components/Card';
 
-const HomeListScreen = () => {
+const HomeListScreen = (props) => {
+  console.log(props.navigation);
   return (
     <View style={styles.container}>
-      <Card></Card>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('HomeDetails')}
+      >
+        <Card navigation={props.navigation} />
+      </TouchableOpacity>
       <FloatingAction
         position="right"
-        onPressItem={() => console.log('Ola')}
+        onPressMain={() => props.navigation.navigate('AddHome')}
         animated={false}
         showBackground={false}
       ></FloatingAction>
