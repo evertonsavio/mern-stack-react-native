@@ -3,7 +3,9 @@
 ```
 npm install -g expo-cli
 expo --version
-expo init awesomeApp
+expo init clientApp
+yarn add @expo/vector-icons
+yarn add react-native-floating-action
 ```
 
 ### Node Server
