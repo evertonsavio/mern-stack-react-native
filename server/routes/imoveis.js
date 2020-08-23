@@ -64,6 +64,34 @@ router.get('/:id', (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+///////////////////////////PUT/api/imoveis////////////////////
+///////////////////////////////////////////////////////////////
+router.put('/:id', [validate], (req, res) => {
+  imovelId = req.params.id;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).send({errors: errors.array()});
+  }
+
+  Imovel.findById(imovelId)
+    .then((house) => {
+      house.title = req.body.title;
+      house.address = req.body.address;
+      house.homeType = req.body.homeType;
+      house.description = req.body.description;
+      house.price = req.body.price;
+      house.image = req.body.image;
+      house.yearBuild = req.body.yearBuild;
+
+      return house.save();
+    })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => console.log(err));
+});
 
 //////////////////////////////////////////////////////////////
 module.exports = router;
