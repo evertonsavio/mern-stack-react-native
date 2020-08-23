@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
+const imoveis = require('./routes/imoveis');
 
+const app = express();
 app.use(express.json());
+app.use('/api/imoveis', imoveis);
 
 //////////////////////Variaveis de ambiente////////////////////
 ///////////////////////////////////////////////////////////////
