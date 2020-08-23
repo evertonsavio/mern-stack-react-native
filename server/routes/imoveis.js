@@ -3,6 +3,8 @@ const Imovel = require('../models/Imovel');
 const router = express.Router();
 const {check, validationResult} = require('express-validator');
 
+////////////////////////////VALIDACAO//////////////////////////
+///////////////////////////////////////////////////////////////
 const validate = [
   check('title')
     .isLength({min: 3})
@@ -16,7 +18,8 @@ const validate = [
   check('price').isNumeric().withMessage('Forneca um valor valido'),
 ];
 
-///api/imoveis
+///////////////////////////POST/api/imoveis////////////////////
+///////////////////////////////////////////////////////////////
 router.post('/', [validate], (req, res) => {
   const errors = validationResult(req);
 
@@ -42,4 +45,25 @@ router.post('/', [validate], (req, res) => {
     .catch((err) => console.log(err));
 });
 
+///////////////////////////GET/api/imoveis////////////////////
+///////////////////////////////////////////////////////////////
+router.get('/', (req, res) => {
+  Imovel.find()
+    .then((imoveis) => {
+      res.send(imoveis);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.get('/:id', (req, res) => {
+  const imovelId = req.params.id;
+
+  Imovel.findById(imovelId)
+    .then((imovel) => {
+      res.send(imovel);
+    })
+    .catch((err) => console.log(err));
+});
+
+//////////////////////////////////////////////////////////////
 module.exports = router;
