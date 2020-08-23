@@ -23,10 +23,11 @@ npm install nodemon --save-dev
 npm run start
 ```
 
-````
-npm install dotenv```
+```
+npm install dotenv
+```
 
-* criar arquivo .env -> PORT=3000  
+- criar arquivo .env -> PORT=3000
 
 ```
 require('dotenv').config();
