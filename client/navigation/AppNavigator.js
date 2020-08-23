@@ -1,4 +1,5 @@
 import React from 'react';
+import {MaterialIcons, MaterialCommunityIcons} from '@expo/vector-icons';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -9,8 +10,8 @@ import AddHomeScreen from '../screens/AddHomeScreen';
 import HomeDetailsScreen from '../screens/HomeDetailsScreen';
 import HomeListScreen from '../screens/HomeListScreen';
 
-const Stack = createStackNavigator ();
-const Tab = createBottomTabNavigator ();
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const aboutStackNavigator = () => {
   return (
@@ -38,8 +39,24 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={stackNavigator} />
-        <Tab.Screen name="About" component={aboutStackNavigator} />
+        <Tab.Screen
+          name="Home"
+          component={stackNavigator}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="home" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="About"
+          component={aboutStackNavigator}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="info" color={color} size={26} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
