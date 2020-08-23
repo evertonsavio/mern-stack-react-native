@@ -38,7 +38,11 @@ const stackNavigator = () => {
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+        tabBarOptions={{
+          activeTintColor: '#e91e63',
+        }}
+      >
         <Tab.Screen
           name="Home"
           component={stackNavigator}
