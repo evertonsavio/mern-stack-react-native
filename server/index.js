@@ -49,6 +49,35 @@ app.post('/api/listing', (req, res) => {
   res.send(home);
 });
 
+/////////////////////////////PUT Update////////////////////////
+///////////////////////////////////////////////////////////////
+app.put('/api/listing/:id', (req, res) => {
+  const home = homes.find((casa) => casa.id === parseInt(req.params.id));
+
+  if (!home) {
+    return res.status(404).send('Imovel nao encontrado');
+  }
+
+  home.type = req.body.type;
+  home.description = req.body.description;
+
+  res.send(home);
+});
+
+/////////////////////////////DELETE////////////////////////////
+///////////////////////////////////////////////////////////////
+app.delete('/api/listing/:id', (req, res) => {
+  const home = homes.find((home) => home.id === parseInt(req.params.id));
+
+  if (!home) {
+    return res.status(404).send('Imovel nao encontrado!');
+  }
+
+  const index = homes.indexOf(home); // Encontrar o indice de home com indexOf
+  homes.splice(index, 1); // Remover o item com splice, e o numero de items a remover: 1
+  res.send(home);
+});
+
 ///////////////////////////////////////////////////////////////
 app.listen(port, () => {
   console.log(`Escutando a porta ${port}`);
