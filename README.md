@@ -6,6 +6,8 @@ expo --version
 expo init clientApp
 yarn add @expo/vector-icons
 yarn add react-native-floating-action
+yarn add redux react-redux
+yarn add redux-thunk redux-devtools-extension
 ```
 
 ### Node Server
@@ -14,6 +16,7 @@ yarn add react-native-floating-action
 npm init -y
 npm install express
 npm install nodemon --save-dev
+npm install --save express-validator
 ```
 
 - package.json:
@@ -49,6 +52,3 @@ const port = process.env.PORT || 3000;
   
 * https://mongoosejs.com/  
 * npm install moongoose  
-  
-### Express Validator  
-* npm install --save express-validator
