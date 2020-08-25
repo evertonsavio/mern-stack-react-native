@@ -7,27 +7,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Card = (props) => {
+const Card = props => {
+  console.log (props);
   return (
     <View>
       <View style={styles.card}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Casa classica com 4 quartos</Text>
+          <Text style={styles.title}>
+            {props.title.lendth > 30
+              ? props.title.slice (0.30) + '...'
+              : props.title}
+          </Text>
         </View>
         <View style={styles.imageContainer}>
-          <ImageBackground
-            source={require('../assets/images/house.png')}
-            style={styles.image}
-          >
-            <Text style={styles.price}>R$400,000</Text>
+          <ImageBackground source={{uri: props.image}} style={styles.image}>
+            <Text style={styles.price}>{props.price}R$</Text>
             <View style={styles.year}>
-              <Text style={styles.yearText}>2000</Text>
+              <Text style={styles.yearText}>{props.yearBuild}</Text>
             </View>
           </ImageBackground>
         </View>
         <View style={styles.description}>
           <Text style={styles.descriptionText}>
-            Muito bonita =D, Vale a pena gastar!
+            {props.description.length > 100
+              ? props.description.slice (0.30)
+              : props.description}
           </Text>
         </View>
       </View>
@@ -35,7 +39,7 @@ const Card = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create ({
   card: {
     shadowColor: 'black',
     shadowOpacity: 0.25,

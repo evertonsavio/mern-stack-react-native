@@ -4,10 +4,10 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 
 import houseReducer from './reducers/houseReducer';
 
-const rootReducer = combineReducers({
-  house: houseReducer,
+const rootReducer = combineReducers ({
+  imoveis: houseReducer,
 });
 
-const middleware = composeWithDevTools(applyMiddleware(thunk));
+const middleware = composeWithDevTools (applyMiddleware (thunk));
 
-export default createStore(rootReducer, middleware);
+export default createStore (rootReducer, middleware);
