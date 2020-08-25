@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 const Card = props => {
-  console.log (props);
+  //console.log (props);
   return (
     <TouchableOpacity
       onPress={() =>
@@ -17,13 +17,20 @@ const Card = props => {
       <View style={styles.card}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
-            {props.title.lendth > 30
+            {props.title && props.title.length > 30
               ? props.title.slice (0.30) + '...'
               : props.title}
           </Text>
         </View>
         <View style={styles.imageContainer}>
-          <ImageBackground source={{uri: props.image}} style={styles.image}>
+          <ImageBackground
+            source={{
+              uri: props.image
+                ? props.image
+                : 'https://images.adsttc.com/media/images/5ea4/cf15/b357/65bc/0900/003e/medium_jpg/7.jpg?1587859212',
+            }}
+            style={styles.image}
+          >
             <Text style={styles.price}>{props.price}R$</Text>
             <View style={styles.year}>
               <Text style={styles.yearText}>{props.yearBuild}</Text>
@@ -32,7 +39,7 @@ const Card = props => {
         </View>
         <View style={styles.description}>
           <Text style={styles.descriptionText}>
-            {props.description.length > 100
+            {props.description && props.description.length > 100
               ? props.description.slice (0.30)
               : props.description}
           </Text>
