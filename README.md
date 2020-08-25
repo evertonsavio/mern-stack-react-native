@@ -9,6 +9,7 @@ yarn add react-native-floating-action
 yarn add redux react-redux
 yarn add redux-thunk redux-devtools-extension
 yarn add formik
+yarn add yup
 ```
 
 ### Node Server
