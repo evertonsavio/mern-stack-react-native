@@ -10,7 +10,10 @@ import {
 const Card = props => {
   console.log (props);
   return (
-    <View>
+    <TouchableOpacity
+      onPress={() =>
+        props.navigation.navigate ('HomeDetails', {houseId: props.id})}
+    >
       <View style={styles.card}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
@@ -35,7 +38,7 @@ const Card = props => {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

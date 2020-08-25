@@ -1,38 +1,41 @@
 import React from 'react';
 import {StyleSheet, View, Text, ScrollView, Image} from 'react-native';
+import {useSelector} from 'react-redux';
 
-const HomeDetailsScreen = () => {
+const HomeDetailsScreen = props => {
+  const {houseId} = props.route.params;
+  const imovel = useSelector (state =>
+    state.imoveis.imoveis.find (house => house._id == houseId)
+  );
+  console.log (imovel);
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.heading}>
-          <Text style={styles.title}>Modern 3-bedroom flat</Text>
+          <Text style={styles.title}>{imovel.title}</Text>
         </View>
         <View>
-          <Image
-            source={require ('../assets/images/house.png')}
-            style={styles.image}
-          />
+          <Image source={{uri: imovel.image}} style={styles.image} />
         </View>
         <View style={styles.group}>
-          <Text style={styles.label}>Home Type: </Text>
-          <Text style={styles.value}>Flat</Text>
+          <Text style={styles.label}>Tipo da casa: </Text>
+          <Text style={styles.value}>{imovel.homeType}</Text>
         </View>
         <View style={styles.group}>
-          <Text style={styles.label}>Price: </Text>
-          <Text style={styles.value}>$200,000</Text>
+          <Text style={styles.label}>Preco: </Text>
+          <Text style={styles.value}>{imovel.price}</Text>
         </View>
         <View style={styles.group}>
-          <Text style={styles.label}>Year Built: </Text>
-          <Text style={styles.value}>2020</Text>
+          <Text style={styles.label}>Ano da construcao: </Text>
+          <Text style={styles.value}>{imovel.yearBuild}</Text>
         </View>
         <View style={styles.group}>
-          <Text style={styles.label}>Address: </Text>
-          <Text style={styles.value}>This is the Address</Text>
+          <Text style={styles.label}>Endereco: </Text>
+          <Text style={styles.value}>{imovel.address}</Text>
         </View>
         <View style={styles.group}>
-          <Text style={styles.label}>Description: </Text>
-          <Text style={styles.value}>This is the Description</Text>
+          <Text style={styles.label}>Descricao: </Text>
+          <Text style={styles.value}>{imovel.description}</Text>
         </View>
       </View>
     </ScrollView>

@@ -33,6 +33,7 @@ const HomeListScreen = props => {
             image={item.image}
             yearBuild={item.yearBuild}
             description={item.description}
+            id={item._id}
           />
         )}
       />
