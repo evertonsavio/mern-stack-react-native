@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
 const authRoutes = require('./routes/auth');
@@ -9,4 +10,17 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', authRoutes);
 
-app.listen(3005, () => console.log('Server is running'));
+mongoose
+  .connect(
+    'mongodb+srv://king_auth:i7ozhLIT9qjjMoHW@cluster0.ucm6i.mongodb.net/auth_system?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    }
+  )
+  .then(() => {
+    app.listen(3005, () => console.log('Server is running'));
+  })
+  .catch((err) => console.log(err));
