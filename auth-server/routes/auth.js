@@ -6,6 +6,12 @@ const jwt = require('jsonwebtoken');
 
 const route = express.Router();
 
+//////////////////////Variaveis de ambiente////////////////////
+///////////////////////////////////////////////////////////////
+require('dotenv').config();
+const supersecret = process.env.SUPERSECRET;
+///////////////////////////////////////////////////////////////
+
 const validate = [
   check('fullName').isLength({min: 2}).withMessage('Your name is required'),
   check('email').isEmail().withMessage('Not valid email'),
@@ -64,8 +70,7 @@ route.post('/login', loginValidate, async (req, res) => {
   if (!validPassword) return res.status(404).send('Invalido.');
 
   //Criar e assinar um token
-  const token = jwt.sign({_id: user._id, email: user.email}, 'SUPERSECRET123');
-
+  const token = jwt.sign({_id: user._id, email: user.email}, supersecret);
   res.header('auth-token', token).send({message: 'Logged In', token});
 });
 
