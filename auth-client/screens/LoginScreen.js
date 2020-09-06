@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   KeyboardAvoidingView,
   TextInput,
   Image,
@@ -11,7 +10,7 @@ import {
 import {Formik} from 'formik';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const LoginScreen = () => {
+const LoginScreen = (navData) => {
   return (
     <KeyboardAvoidingView behavior="height" flex={1}>
       <Formik
@@ -21,6 +20,7 @@ const LoginScreen = () => {
         }}
         onSubmit={(values) => {
           console.log(values);
+          navData.navigation.navigate('Home');
         }}
       >
         {(props) => (
@@ -37,19 +37,28 @@ const LoginScreen = () => {
                 placeholder="Email"
                 placeholderTextColor="#fff"
                 keyboardType="email-address"
+                onChangeText={props.handleChange('email')}
+                value={props.values.email}
               />
               <TextInput
                 style={styles.input}
                 placeholder="Password"
                 placeholderTextColor="#fff"
                 secureTextEntry={true}
+                onChangeText={props.handleChange('password')}
+                value={props.values.password}
               />
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={props.handleSubmit}
+              >
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
               <View style={styles.registerContainer}>
                 <Text style={styles.registerText}>Dont have account</Text>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navData.navigation.navigate('Register')}
+                >
                   <Text style={styles.registerButton}>Register</Text>
                 </TouchableOpacity>
               </View>
