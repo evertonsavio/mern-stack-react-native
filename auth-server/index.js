@@ -1,17 +1,19 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require ('express');
+const mongoose = require ('mongoose');
 
-const app = express();
-const authRoutes = require('./routes/auth');
+const app = express ();
+app.use (express.json ());
 
-app.get('/', (req, res) => {
-  res.send('Auth System');
+const authRoutes = require ('./routes/auth');
+
+app.get ('/', (req, res) => {
+  res.send ('Auth System');
 });
 
-app.use('/api/users', authRoutes);
+app.use ('/api/users', authRoutes);
 
 mongoose
-  .connect(
+  .connect (
     'mongodb+srv://king_auth:i7ozhLIT9qjjMoHW@cluster0.ucm6i.mongodb.net/auth_system?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
@@ -20,7 +22,7 @@ mongoose
       useCreateIndex: true,
     }
   )
-  .then(() => {
-    app.listen(3005, () => console.log('Server is running'));
+  .then (() => {
+    app.listen (3000, () => console.log ('Server is running'));
   })
-  .catch((err) => console.log(err));
+  .catch (err => console.log (err));
