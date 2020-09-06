@@ -10,6 +10,8 @@ const route = express.Router();
 ///////////////////////////////////////////////////////////////
 require('dotenv').config();
 const supersecret = process.env.SUPERSECRET;
+//CRIAR .env file na raix do projeto e dentro setar suas variaveis
+//Exemplo: SUPERSECRET = 'SuPEr$ECR3t123'
 ///////////////////////////////////////////////////////////////
 
 const validate = [
