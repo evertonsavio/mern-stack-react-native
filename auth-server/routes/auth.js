@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/users');
 const {check, validationResult} = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 const route = express.Router();
 
@@ -17,14 +18,24 @@ route.post('/register', validate, async (req, res) => {
     return res.status(400).json({errors: errors.array()});
   }
 
+  const userExists = await User.findOne({email: req.body.email});
+  if (userExists) return res.status(400).send({erro: 'email ja existe'});
+
+  const salt = await bcrypt.genSalt();
+  const hashPassword = await bcrypt.hash(req.body.password, salt);
+
   const user = new User({
     fullName: req.body.fullName,
     email: req.body.email,
-    password: req.body.password,
+    password: hashPassword,
   });
   try {
     const savedUser = await user.save();
-    res.send(savedUser);
+    res.send({
+      id: savedUser._id,
+      fullName: savedUser.fullName,
+      email: savedUser.email,
+    });
   } catch (error) {
     res.status(400).send(error);
   }
