@@ -41,8 +41,28 @@ route.post('/register', validate, async (req, res) => {
   }
 });
 
-route.post('/login', (req, res) => {
-  res.send('login route');
+///////////////////////////LOGIN//////////////////////////////
+
+const loginValidate = [
+  check('email').isEmail().withMessage('Not valid email'),
+  check('password').isLength({min: 6}).withMessage('min 6 characters'),
+];
+
+route.post('/login', loginValidate, async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()});
+  }
+  //checar se o email existe,
+  const user = await User.findOne({email: req.body.email});
+  console.log(user);
+  if (!user) return res.status(404).send('Usuario nao existe');
+  //chechar se o password confere
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword) return res.status(404).send('Invalido.');
+
+  res.send('Logado com sucesso');
 });
 
 module.exports = route;
