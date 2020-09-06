@@ -18,7 +18,8 @@ yarn add yup
 npm init -y
 npm install express
 npm install nodemon --save-dev
-npm install --save express-validator
+npm install --save express-validator  
+npm install bcryptjs
 ```
 
 - package.json:
