@@ -14,22 +14,27 @@ import {
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
-const formSchema = yup.object ({
+import {useDispatch} from 'react-redux';
+import * as authAction from '../redux/actions/authActions';
+
+const formSchema = yup.object({
   fullName: yup
-    .string ()
-    .required ('Necessario preencher esse campo')
-    .min (2, 'Minimo de 2 caracteres'),
+    .string()
+    .required('Necessario preencher esse campo')
+    .min(2, 'Minimo de 2 caracteres'),
   email: yup
-    .string ()
-    .email ('Forneca um email valido')
-    .required ('Necessario preencher esse campo'),
+    .string()
+    .email('Forneca um email valido')
+    .required('Necessario preencher esse campo'),
   password: yup
-    .string ()
-    .required ('Necessario preencher esse campo')
-    .min (6, 'Minimo de 6 caracteres'),
+    .string()
+    .required('Necessario preencher esse campo')
+    .min(6, 'Minimo de 6 caracteres'),
 });
 
-const RegisterScreen = navData => {
+const RegisterScreen = (navData) => {
+  const dispatch = useDispatch();
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -43,16 +48,19 @@ const RegisterScreen = navData => {
             password: '',
           }}
           validationSchema={formSchema}
-          onSubmit={values => {
-            console.log (values);
-            navData.navigation.navigate ('Home');
+          onSubmit={(values) => {
+            dispatch(authAction.registerUser(values))
+              .then(() => {
+                navData.navigation.navigate('Home');
+              })
+              .catch((err) => console.log(err));
           }}
         >
-          {props => (
+          {(props) => (
             <View style={styles.container}>
               <View style={styles.logo}>
                 <Image
-                  source={require ('../assets/images/logo.png')}
+                  source={require('../assets/images/logo.png')}
                   style={styles.image}
                 />
               </View>
@@ -61,9 +69,9 @@ const RegisterScreen = navData => {
                   style={styles.input}
                   placeholder="Full Name"
                   placeholderTextColor="#fff"
-                  onChangeText={props.handleChange ('fullName')}
+                  onChangeText={props.handleChange('fullName')}
                   value={props.values.fullName}
-                  onBlur={props.handleBlur ('fullName')}
+                  onBlur={props.handleBlur('fullName')}
                 />
                 <Text style={styles.error}>
                   {props.touched.fullName && props.errors.fullName}
@@ -73,9 +81,9 @@ const RegisterScreen = navData => {
                   placeholder="Email"
                   placeholderTextColor="#fff"
                   keyboardType="email-address"
-                  onChangeText={props.handleChange ('email')}
+                  onChangeText={props.handleChange('email')}
                   value={props.values.email}
-                  onBlur={props.handleBlur ('email')}
+                  onBlur={props.handleBlur('email')}
                 />
                 <Text style={styles.error}>
                   {props.touched.email && props.errors.email}
@@ -85,9 +93,9 @@ const RegisterScreen = navData => {
                   placeholder="Password"
                   placeholderTextColor="#fff"
                   secureTextEntry={true}
-                  onChangeText={props.handleChange ('password')}
+                  onChangeText={props.handleChange('password')}
                   value={props.values.password}
-                  onBlur={props.handleBlur ('password')}
+                  onBlur={props.handleBlur('password')}
                 />
                 <Text style={styles.error}>
                   {props.touched.password && props.errors.password}
@@ -101,7 +109,7 @@ const RegisterScreen = navData => {
                 <View style={styles.registerContainer}>
                   <Text style={styles.registerText}>Ja possui uma conta? </Text>
                   <TouchableOpacity
-                    onPress={() => navData.navigation.navigate ('Login')}
+                    onPress={() => navData.navigation.navigate('Login')}
                   >
                     <Text style={styles.registerButton}>Faca o Login</Text>
                   </TouchableOpacity>
@@ -117,7 +125,7 @@ const RegisterScreen = navData => {
 
 export default RegisterScreen;
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
