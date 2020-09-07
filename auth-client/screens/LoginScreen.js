@@ -83,11 +83,11 @@ const LoginScreen = navData => {
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <View style={styles.registerContainer}>
-                  <Text style={styles.registerText}>Dont have account</Text>
+                  <Text style={styles.registerText}>Nao tem uma conta? </Text>
                   <TouchableOpacity
                     onPress={() => navData.navigation.navigate ('Register')}
                   >
-                    <Text style={styles.registerButton}>Register</Text>
+                    <Text style={styles.registerButton}>Registre Aqui</Text>
                   </TouchableOpacity>
                 </View>
               </View>

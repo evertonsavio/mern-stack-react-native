@@ -99,11 +99,11 @@ const RegisterScreen = navData => {
                   <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
                 <View style={styles.registerContainer}>
-                  <Text style={styles.registerText}>have an account?</Text>
+                  <Text style={styles.registerText}>Ja possui uma conta? </Text>
                   <TouchableOpacity
                     onPress={() => navData.navigation.navigate ('Login')}
                   >
-                    <Text style={styles.registerButton}>Login</Text>
+                    <Text style={styles.registerButton}>Faca o Login</Text>
                   </TouchableOpacity>
                 </View>
               </View>
