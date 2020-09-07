@@ -11,6 +11,7 @@ yarn add redux-thunk redux-devtools-extension
 yarn add formik
 yarn add yup
 yarn add @react-native-community/async-storage
+yarn add jwt-decode
 ```
 
 ### Node Server
