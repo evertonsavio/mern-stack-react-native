@@ -14,18 +14,23 @@ import {
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
-const formSchema = yup.object ({
+import {useDispatch} from 'react-redux';
+import * as authAction from '../redux/actions/authActions';
+
+const formSchema = yup.object({
   email: yup
-    .string ('Isso nao e valido')
-    .email ('Deve ser um email valido')
-    .required ('Necessario preencher esse campo'),
+    .string('Isso nao e valido')
+    .email('Deve ser um email valido')
+    .required('Necessario preencher esse campo'),
   password: yup
-    .string ()
-    .required ('Necessario preencher esse campo')
-    .min (6, 'Minimo de 6 caracteres'),
+    .string()
+    .required('Necessario preencher esse campo')
+    .min(6, 'Minimo de 6 caracteres'),
 });
 
-const LoginScreen = navData => {
+const LoginScreen = (navData) => {
+  const dispatch = useDispatch();
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -38,16 +43,17 @@ const LoginScreen = navData => {
             password: '',
           }}
           validationSchema={formSchema}
-          onSubmit={values => {
-            console.log (values);
-            navData.navigation.navigate ('Home');
+          onSubmit={(values) => {
+            dispatch(authAction.loginUser(values))
+              .then(() => navData.navigation.navigate('Home'))
+              .catch((err) => console.log(err));
           }}
         >
-          {props => (
+          {(props) => (
             <View style={styles.container}>
               <View style={styles.logo}>
                 <Image
-                  source={require ('../assets/images/logo.png')}
+                  source={require('../assets/images/logo.png')}
                   style={styles.image}
                 />
               </View>
@@ -57,9 +63,9 @@ const LoginScreen = navData => {
                   placeholder="Email"
                   placeholderTextColor="#fff"
                   keyboardType="email-address"
-                  onChangeText={props.handleChange ('email')}
+                  onChangeText={props.handleChange('email')}
                   value={props.values.email}
-                  onBlur={props.handleBlur ('email')}
+                  onBlur={props.handleBlur('email')}
                 />
                 <Text style={styles.error}>
                   {props.touched.email && props.errors.email}
@@ -69,9 +75,9 @@ const LoginScreen = navData => {
                   placeholder="Password"
                   placeholderTextColor="#fff"
                   secureTextEntry={true}
-                  onChangeText={props.handleChange ('password')}
+                  onChangeText={props.handleChange('password')}
                   value={props.values.password}
-                  onBlur={props.handleBlur ('password')}
+                  onBlur={props.handleBlur('password')}
                 />
                 <Text style={styles.error}>
                   {props.touched.password && props.errors.password}
@@ -85,7 +91,7 @@ const LoginScreen = navData => {
                 <View style={styles.registerContainer}>
                   <Text style={styles.registerText}>Nao tem uma conta? </Text>
                   <TouchableOpacity
-                    onPress={() => navData.navigation.navigate ('Register')}
+                    onPress={() => navData.navigation.navigate('Register')}
                   >
                     <Text style={styles.registerButton}>Registre Aqui</Text>
                   </TouchableOpacity>
@@ -101,7 +107,7 @@ const LoginScreen = navData => {
 
 export default LoginScreen;
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
