@@ -10,6 +10,7 @@ yarn add redux react-redux
 yarn add redux-thunk redux-devtools-extension
 yarn add formik
 yarn add yup
+yarn add @react-native-community/async-storage
 ```
 
 ### Node Server
