@@ -6,73 +6,102 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Image,
+  Platform,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {Formik} from 'formik';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import * as yup from 'yup';
 
-const LoginScreen = (navData) => {
+const formSchema = yup.object ({
+  email: yup
+    .string ('Isso nao e valido')
+    .email ('Deve ser um email valido')
+    .required ('Necessario preencher esse campo'),
+  password: yup
+    .string ()
+    .required ('Necessario preencher esse campo')
+    .min (6, 'Minimo de 6 caracteres'),
+});
+
+const LoginScreen = navData => {
   return (
-    <KeyboardAvoidingView behavior="height" flex={1}>
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        onSubmit={(values) => {
-          console.log(values);
-          navData.navigation.navigate('Home');
-        }}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        flex={1}
       >
-        {(props) => (
-          <View style={styles.container}>
-            <View style={styles.logo}>
-              <Image
-                source={require('../assets/images/logo.png')}
-                style={styles.image}
-              />
-            </View>
-            <View>
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="#fff"
-                keyboardType="email-address"
-                onChangeText={props.handleChange('email')}
-                value={props.values.email}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                placeholderTextColor="#fff"
-                secureTextEntry={true}
-                onChangeText={props.handleChange('password')}
-                value={props.values.password}
-              />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={props.handleSubmit}
-              >
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
-              <View style={styles.registerContainer}>
-                <Text style={styles.registerText}>Dont have account</Text>
+        <Formik
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={formSchema}
+          onSubmit={values => {
+            console.log (values);
+            navData.navigation.navigate ('Home');
+          }}
+        >
+          {props => (
+            <View style={styles.container}>
+              <View style={styles.logo}>
+                <Image
+                  source={require ('../assets/images/logo.png')}
+                  style={styles.image}
+                />
+              </View>
+              <View>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  placeholderTextColor="#fff"
+                  keyboardType="email-address"
+                  onChangeText={props.handleChange ('email')}
+                  value={props.values.email}
+                  onBlur={props.handleBlur ('email')}
+                />
+                <Text style={styles.error}>
+                  {props.touched.email && props.errors.email}
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  placeholderTextColor="#fff"
+                  secureTextEntry={true}
+                  onChangeText={props.handleChange ('password')}
+                  value={props.values.password}
+                  onBlur={props.handleBlur ('password')}
+                />
+                <Text style={styles.error}>
+                  {props.touched.password && props.errors.password}
+                </Text>
                 <TouchableOpacity
-                  onPress={() => navData.navigation.navigate('Register')}
+                  style={styles.button}
+                  onPress={props.handleSubmit}
                 >
-                  <Text style={styles.registerButton}>Register</Text>
+                  <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
+                <View style={styles.registerContainer}>
+                  <Text style={styles.registerText}>Dont have account</Text>
+                  <TouchableOpacity
+                    onPress={() => navData.navigation.navigate ('Register')}
+                  >
+                    <Text style={styles.registerButton}>Register</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        )}
-      </Formik>
-    </KeyboardAvoidingView>
+          )}
+        </Formik>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default LoginScreen;
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create ({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -125,5 +154,6 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
+    alignSelf: 'center',
   },
 });

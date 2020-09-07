@@ -6,81 +6,118 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
 } from 'react-native';
 import {Formik} from 'formik';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import * as yup from 'yup';
 
-const RegisterScreen = (navData) => {
+const formSchema = yup.object ({
+  fullName: yup
+    .string ()
+    .required ('Necessario preencher esse campo')
+    .min (2, 'Minimo de 2 caracteres'),
+  email: yup
+    .string ()
+    .email ('Forneca um email valido')
+    .required ('Necessario preencher esse campo'),
+  password: yup
+    .string ()
+    .required ('Necessario preencher esse campo')
+    .min (6, 'Minimo de 6 caracteres'),
+});
+
+const RegisterScreen = navData => {
   return (
-    <KeyboardAvoidingView behavior="height" flex={1}>
-      <Formik
-        initialValues={{
-          firtName: '',
-          email: '',
-          password: '',
-        }}
-        onSubmit={(values) => {
-          console.log(values);
-          navData.navigation.navigate('Home');
-        }}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        flex={1}
       >
-        {(props) => (
-          <View style={styles.container}>
-            <View style={styles.logo}>
-              <Image
-                source={require('../assets/images/logo.png')}
-                style={styles.image}
-              />
-            </View>
-            <View>
-              <TextInput
-                style={styles.input}
-                placeholder="Full Name"
-                placeholderTextColor="#fff"
-                onChangeText={props.handleChange('fullName')}
-                value={props.values.fullName}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="#fff"
-                keyboardType="email-address"
-                onChangeText={props.handleChange('email')}
-                value={props.values.email}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                placeholderTextColor="#fff"
-                secureTextEntry={true}
-                onChangeText={props.handleChange('password')}
-                value={props.values.password}
-              />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={props.handleSubmit}
-              >
-                <Text style={styles.buttonText}>Register</Text>
-              </TouchableOpacity>
-              <View style={styles.registerContainer}>
-                <Text style={styles.registerText}>have an account?</Text>
+        <Formik
+          initialValues={{
+            fullName: '',
+            email: '',
+            password: '',
+          }}
+          validationSchema={formSchema}
+          onSubmit={values => {
+            console.log (values);
+            navData.navigation.navigate ('Home');
+          }}
+        >
+          {props => (
+            <View style={styles.container}>
+              <View style={styles.logo}>
+                <Image
+                  source={require ('../assets/images/logo.png')}
+                  style={styles.image}
+                />
+              </View>
+              <View>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Full Name"
+                  placeholderTextColor="#fff"
+                  onChangeText={props.handleChange ('fullName')}
+                  value={props.values.fullName}
+                  onBlur={props.handleBlur ('fullName')}
+                />
+                <Text style={styles.error}>
+                  {props.touched.fullName && props.errors.fullName}
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  placeholderTextColor="#fff"
+                  keyboardType="email-address"
+                  onChangeText={props.handleChange ('email')}
+                  value={props.values.email}
+                  onBlur={props.handleBlur ('email')}
+                />
+                <Text style={styles.error}>
+                  {props.touched.email && props.errors.email}
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  placeholderTextColor="#fff"
+                  secureTextEntry={true}
+                  onChangeText={props.handleChange ('password')}
+                  value={props.values.password}
+                  onBlur={props.handleBlur ('password')}
+                />
+                <Text style={styles.error}>
+                  {props.touched.password && props.errors.password}
+                </Text>
                 <TouchableOpacity
-                  onPress={() => navData.navigation.navigate('Login')}
+                  style={styles.button}
+                  onPress={props.handleSubmit}
                 >
-                  <Text style={styles.registerButton}>Login</Text>
+                  <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
+                <View style={styles.registerContainer}>
+                  <Text style={styles.registerText}>have an account?</Text>
+                  <TouchableOpacity
+                    onPress={() => navData.navigation.navigate ('Login')}
+                  >
+                    <Text style={styles.registerButton}>Login</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        )}
-      </Formik>
-    </KeyboardAvoidingView>
+          )}
+        </Formik>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default RegisterScreen;
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create ({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -133,5 +170,6 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
+    alignSelf: 'center',
   },
 });
