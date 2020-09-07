@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -45,7 +46,13 @@ const LoginScreen = (navData) => {
           validationSchema={formSchema}
           onSubmit={(values) => {
             dispatch(authAction.loginUser(values))
-              .then(() => navData.navigation.navigate('Home'))
+              .then((result) => {
+                if (result.success) {
+                  navData.navigation.navigate('Home');
+                } else {
+                  Alert.alert(result.message);
+                }
+              })
               .catch((err) => console.log(err));
           }}
         >
