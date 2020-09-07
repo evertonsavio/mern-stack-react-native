@@ -59,3 +59,13 @@ const port = process.env.PORT || 3000;
   
 * https://mongoosejs.com/  
 * npm install moongoose  
+  
+### HEROKU  
+  
+* Instalar Heroku CLI -> https://devcenter.heroku.com/articles/heroku-cli#getting-started  
+* Para checar versao no terminal digite: heroku --version  
+* Para login a partir do terminal: heroku login -i  
+* Apos criar a Procfile e alterar a package.json com a engines  
+* ``` heroku local web ```
+* ``` heroku create ```  
+* ``` git push heroku master ```
