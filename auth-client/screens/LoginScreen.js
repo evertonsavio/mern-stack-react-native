@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -33,6 +34,16 @@ const formSchema = yup.object({
 const LoginScreen = (navData) => {
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -46,20 +57,27 @@ const LoginScreen = (navData) => {
           }}
           validationSchema={formSchema}
           onSubmit={(values) => {
+            setIsLoading(true);
             dispatch(authAction.loginUser(values))
               .then(async (result) => {
                 if (result.success) {
                   try {
                     await AsyncStorage.setItem('token', result.token);
+                    setIsLoading(false);
                     navData.navigation.navigate('Home');
                   } catch (error) {
+                    setIsLoading(false);
                     console.log(error);
                   }
                 } else {
+                  setIsLoading(false);
                   Alert.alert(result.message);
                 }
               })
-              .catch((err) => console.log(err));
+              .catch((err) => {
+                setIsLoading(false);
+                console.log(err);
+              });
           }}
         >
           {(props) => (
@@ -174,5 +192,10 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     alignSelf: 'center',
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
