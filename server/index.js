@@ -1,28 +1,35 @@
-const express = require ('express');
-const mongoose = require ('mongoose');
-const imoveis = require ('./routes/imoveis');
+const express = require('express');
+const mongoose = require('mongoose');
+const imoveis = require('./routes/imoveis');
 
-const app = express ();
-app.use (express.json ());
-app.use ('/api/imoveis', imoveis);
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use('/api/imoveis', imoveis);
 
 //////////////////////Variaveis de ambiente////////////////////
 ///////////////////////////////////////////////////////////////
-require ('dotenv').config ();
+require('dotenv').config();
 const port = process.env.PORT || 3000;
+const user_db = process.env.DB_USERNAME;
+const password_db = process.env.DB_PASSWORD;
+const name_db = process.env.DB_NAME;
 
 ///////////////////Conexao com MongoDB Cloud////////////////////
 ///////////////////////////////////////////////////////////////
 mongoose
-  .connect (
-    'mongodb+srv://everluca:m50gMaTWP5Re3dBn@cluster0.ybkh2.azure.mongodb.net/imoveis_db?retryWrites=true&w=majority'
+  .connect(
+    `mongodb+srv://${user_db}:${password_db}@cluster0.ybkh2.azure.mongodb.net/${name_db}?retryWrites=true&w=majority`,
+    {useNewUrlParser: true, useUnifiedTopology: true}
   )
-  .then (result => {
-    app.listen (port, () => {
-      console.log (`Escutando a porta ${port}`);
+  .then((result) => {
+    app.listen(port, () => {
+      console.log(`Escutando a porta ${port}`);
     });
   })
-  .catch (err => console.log (err));
+  .catch((err) => console.log(err));
 
 ///////////////////////////////////////////////////////////////
 // Middleware no Node é todo o tipo de função que está entre um
