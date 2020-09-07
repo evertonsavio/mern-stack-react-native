@@ -69,3 +69,4 @@ const port = process.env.PORT || 3000;
 * ``` heroku local web ```
 * ``` heroku create ```  
 * ``` git push heroku master ```
+* A aplicacao deve estar no root do diretorio do git, ou seja package.json deve estar no mesmo diretorio do seu arquivo .git
